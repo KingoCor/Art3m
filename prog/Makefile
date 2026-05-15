@@ -13,6 +13,8 @@ ASFLAGS = -march=$(ARCH) -mabi=$(ABI)
 
 .INTERMEDIATE: init.o
 
+all: main.hex
+
 init.o: init.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
