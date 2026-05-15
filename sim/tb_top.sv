@@ -6,15 +6,17 @@ module tb;
     localparam CLK_HALF_PERIOD = 5;
     localparam RESET_CYCLES    = 3;
 
-    reg  clk;
-    reg  nrst;
+    logic clk;
+    logic nrst;
 
-    wire [15:0] led;
+	wire [ 7:0] seg_en;
+	wire [ 6:0] seg;
 
     top dut (
         .clk (clk),
         .nrst (nrst),
-        .led (led)
+		.seg_en(seg_en),
+		.seg(seg)
     );
 
     always #CLK_HALF_PERIOD clk = ~clk;
@@ -26,12 +28,10 @@ module tb;
         nrst = 1;
     end
 
-    /*
     initial begin
         #1000000;
 		$finish;
     end
-    */
 
     initial begin
         $dumpfile("tb.vcd");

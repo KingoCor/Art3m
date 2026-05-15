@@ -1,10 +1,11 @@
 `include "params.svh"
 
 module top (
-    input  logic       clk,
-    input  logic       nrst,
+	input  logic       clk,
+	input  logic       nrst,
 
-	output logic [15:0] led
+	output      [ 7:0] seg_en,
+	output      [ 6:0] seg
 );
     wire rst = ~nrst;
     wire en = 1'b1;
@@ -15,11 +16,12 @@ module top (
     wire [3:0]  mem_we;
 
 	assign exp_mem_addr = 32'hfffc;
-	led_controller led_controller_i(
+	seven_segment_controller seven_segment_controller_i (
         .clk(clk),
         .rst(rst),
 		.in (exp_mem_dout),
-		.led(led)
+		.seg_en(seg_en),
+		.seg(seg)
 	);
 		
     memory mem_i (
