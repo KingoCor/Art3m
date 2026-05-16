@@ -8,7 +8,7 @@ CC = $(PREFIX)gcc
 LD = $(PREFIX)ld
 OBJCOPY = $(PREFIX)objcopy
 
-CFLAGS = -march=$(ARCH) -mabi=$(ABI) -nostartfiles -nostdlib -g
+CFLAGS = -march=$(ARCH) -mabi=$(ABI) -nostartfiles -nostdlib -g -O3
 ASFLAGS = -march=$(ARCH) -mabi=$(ABI)
 
 .INTERMEDIATE: init.o

@@ -1,12 +1,12 @@
-volatile int *const outReg = (volatile int *)0xfffc;
+volatile unsigned int *const outReg = (volatile unsigned int *)0xfffc;
 
 int main() {
-	int i = 2;
-	int j;
-	int isPrime = 0;
+	*outReg = 2;
+	unsigned int i = 3;
+	unsigned int j, isPrime;
 
 	while(1) {
-		j = 2;
+		j = 3;
 		isPrime = 1;
 		while (j*j<=i) {
 			if (i%j==0) {
@@ -18,6 +18,6 @@ int main() {
 
 		if (isPrime) *outReg = i;
 
-		i++;
+		i+=2;
 	}
 }
