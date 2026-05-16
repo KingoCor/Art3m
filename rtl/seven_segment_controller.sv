@@ -7,6 +7,7 @@ module seven_segment_controller (
 	output logic [ 7:0] seg_en,
 	output logic [ 6:0] seg
 );
+    logic [17:0] counter;
 	logic [3:0] n;
 
 	always_comb begin
@@ -23,28 +24,35 @@ module seven_segment_controller (
 		endcase
 
 		case(n)
-			4'h0: seg = 7'b0_00_0_00_1;
-			4'h1: seg = 7'b1_00_1_11_1;
-			4'h2: seg = 7'b0_01_0_01_0;
-			4'h3: seg = 7'b0_00_0_11_0;
-			4'h4: seg = 7'b1_00_1_10_0;
-			4'h5: seg = 7'b0_10_0_10_0;
-			4'h6: seg = 7'b0_10_0_00_0;
-			4'h7: seg = 7'b0_00_1_11_1;
-			4'h8: seg = 7'b0_00_0_00_0;
-			4'h9: seg = 7'b0_00_0_10_0;
-			4'ha: seg = 7'b0_00_1_00_0;
-			4'hb: seg = 7'b1_10_0_00_0;
-			4'hc: seg = 7'b0_11_0_00_1;
-			4'hd: seg = 7'b1_00_0_01_0;
-			4'he: seg = 7'b0_11_0_00_0;
-			4'hf: seg = 7'b0_11_1_00_0;
-		endcase
+            4'h0: seg = 7'b1_00_0_00_0;
+            4'h1: seg = 7'b1_11_1_00_1;
+            4'h2: seg = 7'b0_10_0_10_0;
+            4'h3: seg = 7'b0_11_0_00_0;
+            4'h4: seg = 7'b0_01_1_00_1;
+            4'h5: seg = 7'b0_01_0_10_0;
+            4'h6: seg = 7'b0_00_0_10_0;
+            4'h7: seg = 7'b1_11_1_00_0;
+            4'h8: seg = 7'b0_00_0_00_0;
+            4'h9: seg = 7'b0_01_0_00_0;
+            4'ha: seg = 7'b0_00_1_00_0;
+            4'hb: seg = 7'b0_00_0_11_0;
+            4'hc: seg = 7'b1_00_0_11_0;
+            4'hd: seg = 7'b0_10_0_00_1;
+            4'he: seg = 7'b0_00_0_11_0;
+            4'hf: seg = 7'b0_00_1_11_0;
+            default: seg = 7'b111_1111;
+        endcase
 	end
 	
 	always_ff @(posedge clk) begin
-		if (rst) seg_en <= 8'b1111_1110;
-		else     seg_en <= {seg_en[6:0],seg_en[7]};
+		if (rst) begin
+		  seg_en <= 8'b1111_1110;
+		  counter <= 0;
+		end
+		else begin
+			if (&counter) seg_en <= {seg_en[6:0],seg_en[7]};
+			counter <= counter + 1;
+		end
 	end
 
 endmodule
